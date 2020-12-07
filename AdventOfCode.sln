@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day05 - SeatCheck", "Day05 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day06 - AllYes", "Day06 - AllYes\Day06 - AllYes.csproj", "{BC375845-ADB9-4529-8D0C-31D43AA198A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day07", "Day07\Day07.csproj", "{BA21DB4D-AA61-487B-A187-E67FBEA985C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day07 - Bag Recursion", "Day07 - Bag Recursion\Day07 - Bag Recursion.csproj", "{BA21DB4D-AA61-487B-A187-E67FBEA985C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
