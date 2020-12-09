@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Day10
 {
@@ -23,12 +25,21 @@ namespace Day10
 
         public static long[] ParseLongArray(this string[] input) => input.Select(str => long.Parse(str)).ToArray();
     }
+
+    static class Clipboard
+    {
+        public static void Set(object value)
+        {
+            Console.WriteLine($"Setting Clipboard: {value}");
+            Process.Start("bash", $"-c \"echo {value} | xclip -selection c\"").WaitForExit();
+        }
+    }
     
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Clipboard.Set(12345);
         }
     }
 }
