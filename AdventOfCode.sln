@@ -18,7 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day08 - Computer", "Day08 -
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day09 - Sums of Numbers", "Day09 - Sums of Numbers\Day09 - Sums of Numbers.csproj", "{EF3B8446-34BD-4D6E-B85D-A6F3E4342275}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day10", "Day10\Day10.csproj", "{5BBED847-6030-4C3A-8482-70CA88204C71}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day11 - Adjacent Seats", "Day11 - Adjacent Seats\Day11 - Adjacent Seats.csproj", "{5BBED847-6030-4C3A-8482-70CA88204C71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
