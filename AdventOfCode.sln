@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day09 - Sums of Numbers", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day11 - Adjacent Seats", "Day11 - Adjacent Seats\Day11 - Adjacent Seats.csproj", "{5BBED847-6030-4C3A-8482-70CA88204C71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day10", "Day10\Day10.csproj", "{7BE8FE1B-3BFC-4E73-94E7-B10589F94062}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day10 - Joltage Adapters", "Day10 - Joltage Adapters\Day10 - Joltage Adapters.csproj", "{7BE8FE1B-3BFC-4E73-94E7-B10589F94062}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
