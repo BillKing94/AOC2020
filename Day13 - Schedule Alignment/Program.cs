@@ -108,51 +108,6 @@ namespace Day13
         }
     }
 
-    class math
-    {
-        /**
-        * Least common multiple of numbers "a" and "b"
-        * @param a number "a"
-        * @param b number "b"
-        * @return lcm(a, b)
-        * @autor Thomas (www.adamjak.net)
-        */
-        public static int lcm(int a, int b)
-        {
-            if (a == 0 || b == 0)
-            {
-                return 0;
-            }
-
-            return (a * b) / gcd(a, b);
-        }
-
-        /**
-        * Greatest common divisor of numbers "a" and "b"
-        * @param a number "a"
-        * @param b number  "b"
-        * @return gcd(a, b)
-        * @autor Thomas (www.adamjak.net)
-        */
-        public static int gcd(int a, int b)
-        {
-            if (a < 1 || b < 1)
-            {
-                throw new ArgumentException("a or b is less than 1");
-            }
-
-            int r;
-            do
-            {
-                r = a % b;
-                a = b;
-                b = r;
-            } while (b != 0);
-
-            return a;
-        }
-    }
-
     class Program
     {
         private const string input = @"1007153
