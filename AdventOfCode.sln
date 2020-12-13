@@ -24,7 +24,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day10 - Joltage Adapters", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day12 - Ship Instructions", "Day12 - Ship Instructions\Day12 - Ship Instructions.csproj", "{55B00B1D-A17D-442D-97C7-BB1F99F1A6AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day13", "Day13\Day13.csproj", "{9934D8E5-74BC-4812-BC5B-58B6A7CE245C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day13 - Schedule Alignment", "Day13 - Schedule Alignment\Day13 - Schedule Alignment.csproj", "{9934D8E5-74BC-4812-BC5B-58B6A7CE245C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
