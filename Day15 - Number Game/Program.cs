@@ -115,18 +115,10 @@ namespace Day15
 
         static void Main(string[] args)
         {
+            var startTime = DateTime.UtcNow;
             var numbers = Parse.ParseLongArray(input.Split(","));
 
-            var spokenTurns = new Dictionary<long, int[]>();
-
-            void markSpoken(long number, int turn)
-            {
-                if (spokenTurns.TryGetValue(number, out var turns))
-                {
-                    spokenTurns[number] = new int[] {turns.Last(), turn};
-                }
-                else spokenTurns[number] = new int[] {turn};
-            }
+            var spokenTurns = new Dictionary<long, int>();
 
             int turnNumber = 1;
             long lastNumber = 0;
@@ -135,21 +127,22 @@ namespace Day15
                 if (turnNumber <= numbers.Length)
                 {
                     lastNumber = numbers[turnNumber - 1];
-                    markSpoken(lastNumber, turnNumber);
+                    spokenTurns[lastNumber] = turnNumber;
                 }
                 else
                 {
-                    var lastTwoTimes = spokenTurns[lastNumber];
-                    if (lastTwoTimes.Length == 1)
+                    var laterTurn = turnNumber - 1;
+                    
+                    if (spokenTurns.TryGetValue(lastNumber, out int earlierTurn))
                     {
-                        lastNumber = 0;
-                        markSpoken(0, turnNumber);
+                        spokenTurns[lastNumber] = laterTurn;
+                        var difference = laterTurn - earlierTurn;
+                        lastNumber = difference;
                     }
                     else
                     {
-                        var difference = lastTwoTimes[1] - lastTwoTimes[0];
-                        lastNumber = difference;
-                        markSpoken(difference, turnNumber);
+                        spokenTurns[lastNumber] = laterTurn;
+                        lastNumber = 0;
                     }
                 }
 
@@ -159,6 +152,7 @@ namespace Day15
                 if (turnNumber == 30000000)
                 {
                     Clipboard.Set(lastNumber);
+                    Console.WriteLine(DateTime.UtcNow - startTime);
                     return;
                 }
                 else
