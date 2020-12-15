@@ -122,28 +122,28 @@ namespace Day15
 
             int turnNumber = 1;
             long lastNumber = 0;
+
+            while (turnNumber <= numbers.Length)
+            {
+                lastNumber = numbers[turnNumber - 1];
+                spokenTurns[lastNumber] = turnNumber;
+                turnNumber++;
+            }
+
             while (true)
             {
-                if (turnNumber <= numbers.Length)
+                var laterTurn = turnNumber - 1;
+                var earlierTurn = spokenTurns[lastNumber];
+                if (earlierTurn != 0)
                 {
-                    lastNumber = numbers[turnNumber - 1];
-                    spokenTurns[lastNumber] = turnNumber;
+                    spokenTurns[lastNumber] = laterTurn;
+                    var difference = laterTurn - earlierTurn;
+                    lastNumber = difference;
                 }
                 else
                 {
-                    var laterTurn = turnNumber - 1;
-                    var earlierTurn = spokenTurns[lastNumber];
-                    if(earlierTurn != 0)
-                    {
-                        spokenTurns[lastNumber] = laterTurn;
-                        var difference = laterTurn - earlierTurn;
-                        lastNumber = difference;
-                    }
-                    else
-                    {
-                        spokenTurns[lastNumber] = laterTurn;
-                        lastNumber = 0;
-                    }
+                    spokenTurns[lastNumber] = laterTurn;
+                    lastNumber = 0;
                 }
 
                 // Console.WriteLine($"{turnNumber}: {lastNumber}");
