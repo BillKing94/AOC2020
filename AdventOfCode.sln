@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day12 - Ship Instructions",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day13 - Schedule Alignment", "Day13 - Schedule Alignment\Day13 - Schedule Alignment.csproj", "{9934D8E5-74BC-4812-BC5B-58B6A7CE245C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day15 - Number Game", "Day15 - Number Game\Day15 - Number Game.csproj", "{B0209E5A-F12A-4A3E-AE47-72D879BFB59B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,5 +86,9 @@ Global
 		{9934D8E5-74BC-4812-BC5B-58B6A7CE245C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9934D8E5-74BC-4812-BC5B-58B6A7CE245C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9934D8E5-74BC-4812-BC5B-58B6A7CE245C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0209E5A-F12A-4A3E-AE47-72D879BFB59B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0209E5A-F12A-4A3E-AE47-72D879BFB59B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0209E5A-F12A-4A3E-AE47-72D879BFB59B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0209E5A-F12A-4A3E-AE47-72D879BFB59B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
