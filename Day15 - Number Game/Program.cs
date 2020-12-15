@@ -118,7 +118,7 @@ namespace Day15
             var startTime = DateTime.UtcNow;
             var numbers = Parse.ParseLongArray(input.Split(","));
 
-            var spokenTurns = new Dictionary<long, int>();
+            var spokenTurns = new int[30000000];
 
             int turnNumber = 1;
             long lastNumber = 0;
@@ -132,8 +132,8 @@ namespace Day15
                 else
                 {
                     var laterTurn = turnNumber - 1;
-                    
-                    if (spokenTurns.TryGetValue(lastNumber, out int earlierTurn))
+                    var earlierTurn = spokenTurns[lastNumber];
+                    if(earlierTurn != 0)
                     {
                         spokenTurns[lastNumber] = laterTurn;
                         var difference = laterTurn - earlierTurn;
