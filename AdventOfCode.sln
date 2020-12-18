@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day16 - Ticket Fields", "Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day17 - N-D Sim", "Day17 - N-D Sim\Day17 - N-D Sim.csproj", "{7B9A9B5E-C925-4ADF-9449-D236F4F3B2C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day18 - Math Parsing", "Day18 - Math Parsing\Day18 - Math Parsing.csproj", "{F020ACB6-9617-4C20-A1C6-123B4D632E14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,5 +110,9 @@ Global
 		{7B9A9B5E-C925-4ADF-9449-D236F4F3B2C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B9A9B5E-C925-4ADF-9449-D236F4F3B2C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B9A9B5E-C925-4ADF-9449-D236F4F3B2C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F020ACB6-9617-4C20-A1C6-123B4D632E14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F020ACB6-9617-4C20-A1C6-123B4D632E14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F020ACB6-9617-4C20-A1C6-123B4D632E14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F020ACB6-9617-4C20-A1C6-123B4D632E14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
