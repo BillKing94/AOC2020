@@ -40,6 +40,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day19 - String Rules", "Day
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day21 - Allergen Lists", "Day21 - Allergen Lists\Day21 - Allergen Lists.csproj", "{F6A5BAC1-8107-45C7-83CC-91879ED64A20}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day20", "Day20\Day20.csproj", "{411A200D-104E-4187-892D-255334E8D524}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day23", "Day23\Day23.csproj", "{DA38EF2F-B805-4F9E-AC66-F3FF8EF6735E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,5 +130,13 @@ Global
 		{F6A5BAC1-8107-45C7-83CC-91879ED64A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6A5BAC1-8107-45C7-83CC-91879ED64A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6A5BAC1-8107-45C7-83CC-91879ED64A20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{411A200D-104E-4187-892D-255334E8D524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{411A200D-104E-4187-892D-255334E8D524}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{411A200D-104E-4187-892D-255334E8D524}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{411A200D-104E-4187-892D-255334E8D524}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA38EF2F-B805-4F9E-AC66-F3FF8EF6735E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA38EF2F-B805-4F9E-AC66-F3FF8EF6735E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA38EF2F-B805-4F9E-AC66-F3FF8EF6735E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA38EF2F-B805-4F9E-AC66-F3FF8EF6735E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
