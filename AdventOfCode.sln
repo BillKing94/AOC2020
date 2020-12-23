@@ -42,7 +42,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day21 - Allergen Lists", "D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day20", "Day20\Day20.csproj", "{411A200D-104E-4187-892D-255334E8D524}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day23", "Day23\Day23.csproj", "{DA38EF2F-B805-4F9E-AC66-F3FF8EF6735E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day23 - Cup Game", "Day23 - Cup Game\Day23 - Cup Game.csproj", "{DA38EF2F-B805-4F9E-AC66-F3FF8EF6735E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
