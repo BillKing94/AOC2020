@@ -2089,6 +2089,7 @@ Tile 1327:
                 this.Content = this.Content.Select(row => new string(row.Reverse().ToArray())).ToArray();
             }
 
+            // all edges are returned as if following in a clockwise order.
             public IEnumerable<(string side, V2 direction)> GetBasicSides()
             {
                 yield return (this.Content[0], V2.Up);
@@ -2098,6 +2099,7 @@ Tile 1327:
                 yield return (new string(this.Content.Select(line => line[^1]).ToArray()), V2.Right);
             }
 
+            // !flipped = clockwise; flipped = counterclockwise
             public IEnumerable<(string side, V2 direction, bool flipped)> GetPermutedSides()
             {
                 foreach (var (side, direction) in this.GetBasicSides())
@@ -2154,6 +2156,7 @@ Tile 1327:
 
             var tileIdToPossiblePairs = new Dictionary<int, HashSet<int>>();
 
+            // Filling tileIdToPossiblePairs with all neighbors for each tile ID.
             foreach (var (id1, tile1) in tiles)
             foreach (var (id2, tile2) in tiles)
             {
@@ -2186,6 +2189,8 @@ Tile 1327:
                 // var result = corners.Aggregate(1L, (soFar, kvp) => soFar * kvp.Key);
                 // Clipboard.Set(result);
 
+                // Pick a random corner, which will be our (0, 0), and a random neighbor to that corner.
+
                 var cornerIds = new HashSet<int>(corners.Select(kvp => kvp.Key));
 
                 var (initialCornerId, initialCornerPairTiles) = corners[0];
@@ -2194,6 +2199,8 @@ Tile 1327:
                 var tileToWalkToward = initialCornerPairTiles.First();
                 var nextInitialCorner = initialCornerPairTiles.Last();
 
+                // Find the common edge between the initial corner and its neighbor, and reorient those tiles so that
+                // the initial corner is on the left.
                 foreach (var s1 in tiles[initialCornerId].GetPermutedSides())
                 foreach (var s2 in tiles[tileToWalkToward].GetPermutedSides())
                 {
@@ -2219,6 +2226,7 @@ Tile 1327:
                             tiles[initialCornerId].FlipV();
                         }
 
+                        // Opposing edge should be flipped.
                         if (!s2.flipped)
                         {
                             tiles[tileToWalkToward].FlipV();
@@ -2231,6 +2239,9 @@ Tile 1327:
                 throw new Exception("no match");
 
                 matchFound: ;
+
+                // Check the other neighbor of our initial corner. If it is *above* the corner, then we need to
+                // vertically flip everything so that our corner is in the top-left.
                 foreach (var s1 in tiles[initialCornerId].GetBasicSides())
                 foreach (var s2 in tiles[nextInitialCorner].GetPermutedSides())
                 {
@@ -2247,8 +2258,11 @@ Tile 1327:
                     }
                 }
 
+                // Map from tile position to tile ID
                 var tileMap = new Dictionary<V2, int>();
                 tileMap[new V2(0, 0)] = initialCornerId;
+
+                // We're going to walk from our corner in the direction of our chosen neighbor until we reach another corner.
 
                 var currentTileId = tileToWalkToward;
                 var currentPosition = new V2(1, 0);
@@ -2296,7 +2310,7 @@ Tile 1327:
                     moveToNextTile: ;
                 }
 
-                // Now we have 1 full row with the correct orientation.
+                // Now we have 1 full row with the correct orientation. Repeat process for remaining rows.
                 var currentStartTile = initialCornerId;
 
                 while (true)
@@ -2372,6 +2386,7 @@ Tile 1327:
                     }
                 }
 
+                // Copy tile contents into final map.
                 var tileMaxX = (int) tileMap.Max(kvp => kvp.Key.X);
                 var tileMaxY = (int) tileMap.Max(kvp => kvp.Key.Y);
                 const int tileWidthWithBorders = 10;
@@ -2416,6 +2431,7 @@ Tile 1327:
                     finalJagged[y] = sb.ToString();
                 }
 
+                // This lets us reuse rotation/flip operations
                 var bigTile = new Tile {Content = finalJagged};
 
                 var seaMonsterPtn = @"
@@ -2437,17 +2453,20 @@ Tile 1327:
                     }
                 }
 
+                // Storing the coords that correspond to monster parts on the big map
                 var seaMonsterParts = new HashSet<V2>();
+
                 var seaMonsterWidth = seaMonsterPositions.Max(v => v.X);
                 var seaMonsterHeight = seaMonsterPositions.Max(v => v.Y);
 
+                // Scanning the map for monsters in each orientation.
                 for (int iFlipped = 0; iFlipped < 2; iFlipped++)
                 {
-                    Console.WriteLine(bigTile);
-                    Console.WriteLine();
-
                     for (int iDirection = 0; iDirection < 4; iDirection++)
                     {
+                        Console.WriteLine(bigTile);
+                        Console.WriteLine();
+
                         for (int y = 0; y < bigTile.Content.Length - seaMonsterHeight; y++)
                         for (int x = 0; x < bigTile.Content[0].Length - seaMonsterWidth; x++)
                         {
@@ -2467,16 +2486,15 @@ Tile 1327:
                             tryNextPosition: ;
                         }
 
-
                         bigTile.RotateCW();
                     }
-                    
+
                     bigTile.FlipV();
                 }
 
                 var totalHash = bigTile.Content.Sum(row => row.Count(c => c == '#'));
                 var result = totalHash - seaMonsterParts.Count;
-                
+
                 Clipboard.Set(result);
             }
             else
