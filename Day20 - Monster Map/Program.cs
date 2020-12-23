@@ -4,7 +4,9 @@ using System.Collections.Immutable;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.Schema;
 
 namespace Day20
 {
@@ -2046,12 +2048,53 @@ Tile 1327:
         {
             public string[] Content;
 
+            public void RotateCW()
+            {
+                var newContent = new char[this.Content[0].Length, Content.Length];
+
+                for (int y = 0; y < this.Content.Length; y++)
+                {
+                    var line = this.Content[y];
+                    for (int x = 0; x < line.Length; x++)
+                    {
+                        var c = this.Content[y][x];
+                        var newX = Content.Length - 1 - y;
+                        var newY = x;
+                        newContent[newX, newY] = c;
+                    }
+                }
+
+                var newContentJagged = new string[this.Content.Length];
+                for (int y = 0; y < newContent.GetLength(1); y++)
+                {
+                    var sb = new StringBuilder();
+                    for (int x = 0; x < newContent.GetLength(0); x++)
+                    {
+                        sb.Append(newContent[x, y]);
+                    }
+
+                    newContentJagged[y] = sb.ToString();
+                }
+
+                this.Content = newContentJagged;
+            }
+
+            public void FlipV()
+            {
+                this.Content = this.Content.Reverse().ToArray();
+            }
+
+            public void FlipH()
+            {
+                this.Content = this.Content.Select(row => new string(row.Reverse().ToArray())).ToArray();
+            }
+
             public IEnumerable<(string side, V2 direction)> GetBasicSides()
             {
                 yield return (this.Content[0], V2.Up);
-                yield return (this.Content[Content.Length - 1], V2.Down);
+                yield return (new string(this.Content[^1].Reverse().ToArray()), V2.Down);
 
-                yield return (new string(this.Content.Select(line => line[0]).ToArray()), V2.Left);
+                yield return (new string(this.Content.Select(line => line[0]).Reverse().ToArray()), V2.Left);
                 yield return (new string(this.Content.Select(line => line[^1]).ToArray()), V2.Right);
             }
 
@@ -2063,6 +2106,9 @@ Tile 1327:
                     yield return (new string(side.Reverse().ToArray()), direction, true);
                 }
             }
+
+            public override string ToString()
+                => string.Join('\n', this.Content);
         }
 
         public static void Main()
@@ -2080,11 +2126,13 @@ Tile 1327:
                 {
                     if (currentLines.Any())
                     {
-                        tiles.Add(new Tile
-                        {
-                            Id = currentId,
-                            Content = currentLines.ToArray()
-                        });
+                        tiles.Add(
+                            currentId,
+                            new Tile
+                            {
+                                Content = currentLines.ToArray()
+                            }
+                        );
                     }
 
                     currentId = int.Parse(match.Groups["id"].Value);
@@ -2096,11 +2144,13 @@ Tile 1327:
                 }
             }
 
-            tiles.Add(new Tile
-            {
-                Id = currentId,
-                Content = currentLines.ToArray()
-            });
+            tiles.Add(
+                currentId,
+                new Tile
+                {
+                    Content = currentLines.ToArray()
+                }
+            );
 
             var tileIdToPossiblePairs = new Dictionary<int, HashSet<int>>();
 
@@ -2109,10 +2159,10 @@ Tile 1327:
             {
                 if (id1 != id2)
                 {
-                    foreach (var side1 in tile1.GetPermutedSides())
-                    foreach (var side2 in tile2.GetPermutedSides())
+                    foreach (var (side1, _, _) in tile1.GetPermutedSides())
+                    foreach (var (side2, _, _) in tile2.GetPermutedSides())
                     {
-                        if (side1.side == side2.side)
+                        if (side1 == side2)
                         {
                             if (tileIdToPossiblePairs.TryGetValue(id1, out var possiblePars))
                             {
@@ -2135,20 +2185,299 @@ Tile 1327:
                 // part1
                 // var result = corners.Aggregate(1L, (soFar, kvp) => soFar * kvp.Key);
                 // Clipboard.Set(result);
-                
+
                 var cornerIds = new HashSet<int>(corners.Select(kvp => kvp.Key));
 
-                var initialCornerId = corners[0].Key;
+                var (initialCornerId, initialCornerPairTiles) = corners[0];
                 var position = new V2(0, 0);
 
-                var currentTileId = initialCornerId;
+                var tileToWalkToward = initialCornerPairTiles.First();
+                var nextInitialCorner = initialCornerPairTiles.Last();
+
+                foreach (var s1 in tiles[initialCornerId].GetPermutedSides())
+                foreach (var s2 in tiles[tileToWalkToward].GetPermutedSides())
+                {
+                    if (s1.side == s2.side)
+                    {
+                        var direction1 = s1.direction;
+                        var direction2 = s2.direction;
+
+                        while (direction1 != V2.Right)
+                        {
+                            direction1 = direction1.RotateCW();
+                            tiles[initialCornerId].RotateCW();
+                        }
+
+                        while (direction2 != V2.Left)
+                        {
+                            direction2 = direction2.RotateCW();
+                            tiles[tileToWalkToward].RotateCW();
+                        }
+
+                        if (s1.flipped)
+                        {
+                            tiles[initialCornerId].FlipV();
+                        }
+
+                        if (!s2.flipped)
+                        {
+                            tiles[tileToWalkToward].FlipV();
+                        }
+
+                        goto matchFound;
+                    }
+                }
+
+                throw new Exception("no match");
+
+                matchFound: ;
+                foreach (var s1 in tiles[initialCornerId].GetBasicSides())
+                foreach (var s2 in tiles[nextInitialCorner].GetPermutedSides())
+                {
+                    if (s1.side == s2.side)
+                    {
+                        if (s1.direction == V2.Down) break;
+                        else if (s1.direction == V2.Up)
+                        {
+                            tiles[initialCornerId].FlipV();
+                            tiles[tileToWalkToward].FlipV();
+                            break;
+                        }
+                        else throw new Exception("Weird direction");
+                    }
+                }
+
+                var tileMap = new Dictionary<V2, int>();
+                tileMap[new V2(0, 0)] = initialCornerId;
+
+                var currentTileId = tileToWalkToward;
+                var currentPosition = new V2(1, 0);
+                tileMap[currentPosition] = currentTileId;
+
+                var cornerTileIds = corners.Select(kvp => kvp.Key).Except(new[] {initialCornerId}).ToHashSet();
                 while (true)
                 {
-                    var nextCandidates = tileIdToPossiblePairs[currentTileId];
-                    var tile1 = tiles[currentTileId];
-                    
-                    // progress from corner to corner and then "zoom in"?
+                    if (cornerTileIds.Contains(currentTileId))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        var nextEdge = tiles[currentTileId].GetBasicSides().Single(s => s.direction == V2.Right).side;
+                        foreach (var tile in tileIdToPossiblePairs[currentTileId])
+                        {
+                            foreach (var side in tiles[tile].GetPermutedSides())
+                            {
+                                if (nextEdge == side.side)
+                                {
+                                    var nextTileDirection = side.direction;
+                                    while (nextTileDirection != V2.Left)
+                                    {
+                                        nextTileDirection = nextTileDirection.RotateCW();
+                                        tiles[tile].RotateCW();
+                                    }
+
+                                    if (!side.flipped)
+                                    {
+                                        tiles[tile].FlipV();
+                                    }
+
+                                    currentTileId = tile;
+                                    currentPosition = new V2(currentPosition.X + 1, currentPosition.Y);
+                                    tileMap[currentPosition] = currentTileId;
+                                    goto moveToNextTile;
+                                }
+                            }
+                        }
+                    }
+
+                    throw new Exception("match issue");
+
+                    moveToNextTile: ;
                 }
+
+                // Now we have 1 full row with the correct orientation.
+                var currentStartTile = initialCornerId;
+
+                while (true)
+                {
+                    // move to leftmost tile in next row
+                    currentPosition = new V2(0, currentPosition.Y + 1);
+                    var edgeToNextStartTile =
+                        tiles[currentStartTile].GetBasicSides().Single(s => s.direction == V2.Down);
+
+                    foreach (var neighbor in tileIdToPossiblePairs[currentStartTile])
+                    foreach (var neighborEdge in tiles[neighbor].GetPermutedSides())
+                    {
+                        if (neighborEdge.side == edgeToNextStartTile.side)
+                        {
+                            var neighborDirection = neighborEdge.direction;
+                            while (neighborDirection != V2.Up)
+                            {
+                                neighborDirection = neighborDirection.RotateCW();
+                                tiles[neighbor].RotateCW();
+                            }
+
+                            if (!neighborEdge.flipped)
+                            {
+                                tiles[neighbor].FlipH();
+                            }
+
+                            currentStartTile = neighbor;
+
+                            goto nextStartFound;
+                        }
+                    }
+
+                    break;
+
+                    nextStartFound: ;
+                    tileMap[currentPosition] = currentStartTile;
+
+                    var currentRowTile = currentStartTile;
+
+                    // fill out current row
+                    while (true)
+                    {
+                        var edgeToNextRowTile = tiles[currentRowTile].GetBasicSides()
+                            .Single(s => s.direction == V2.Right);
+
+                        foreach (var neighbor in tileIdToPossiblePairs[currentRowTile])
+                        foreach (var neighborEdge in tiles[neighbor].GetPermutedSides())
+                        {
+                            if (neighborEdge.side == edgeToNextRowTile.side)
+                            {
+                                var neighborDirection = neighborEdge.direction;
+                                while (neighborDirection != V2.Left)
+                                {
+                                    neighborDirection = neighborDirection.RotateCW();
+                                    tiles[neighbor].RotateCW();
+                                }
+
+                                if (!neighborEdge.flipped)
+                                {
+                                    tiles[neighbor].FlipV();
+                                }
+
+                                currentRowTile = neighbor;
+                                currentPosition = new V2(currentPosition.X + 1, currentPosition.Y);
+                                tileMap[currentPosition] = currentRowTile;
+                                goto continueRow;
+                            }
+                        }
+
+                        break;
+
+                        continueRow: ;
+                    }
+                }
+
+                var tileMaxX = (int) tileMap.Max(kvp => kvp.Key.X);
+                var tileMaxY = (int) tileMap.Max(kvp => kvp.Key.Y);
+                const int tileWidthWithBorders = 10;
+                const int tileHeightWithBorders = 10;
+                const int tileWidth = tileWidthWithBorders - 2;
+                const int tileHeight = tileHeightWithBorders - 2;
+
+                var finalMap = new char[(tileMaxX + 1) * tileWidth, (tileMaxY + 1) * tileHeight];
+
+                for (int tileX = 0; tileX <= tileMaxX; tileX++)
+                for (int tileY = 0; tileY <= tileMaxY; tileY++)
+                {
+                    var tilePos = new V2(tileX, tileY);
+
+                    var tileId = tileMap[new V2(tileX, tileY)];
+                    var tile = tiles[tileId];
+
+                    for (int subTileY = 0; subTileY < tile.Content.Length - 2; subTileY++)
+                    {
+                        var line = tile.Content[subTileY + 1];
+                        for (int subTileX = 0; subTileX < line.Length - 2; subTileX++)
+                        {
+                            char c = line[subTileX + 1];
+
+                            var globalPos = tilePos * 8 + new V2(subTileX, subTileY);
+                            finalMap[(int) globalPos.X, (int) globalPos.Y] = c;
+                        }
+                    }
+                }
+
+                var finalJagged = new string[finalMap.GetLength(1)];
+
+                for (int y = 0; y < finalMap.GetLength(1); y++)
+                {
+                    var sb = new StringBuilder();
+                    for (int x = 0; x < finalMap.GetLength(0); x++)
+                    {
+                        char c = finalMap[x, y];
+                        sb.Append(c);
+                    }
+
+                    finalJagged[y] = sb.ToString();
+                }
+
+                var bigTile = new Tile {Content = finalJagged};
+
+                var seaMonsterPtn = @"
+                  # 
+#    ##    ##    ###
+ #  #  #  #  #  #   
+".Trim('\n').Split('\n');
+
+                var seaMonsterPositions = new List<V2>();
+                for (int y = 0; y < seaMonsterPtn.Length; y++)
+                {
+                    var line = seaMonsterPtn[y];
+                    for (int x = 0; x < line.Length; x++)
+                    {
+                        if (line[x] == '#')
+                        {
+                            seaMonsterPositions.Add(new V2(x, y));
+                        }
+                    }
+                }
+
+                var seaMonsterParts = new HashSet<V2>();
+                var seaMonsterWidth = seaMonsterPositions.Max(v => v.X);
+                var seaMonsterHeight = seaMonsterPositions.Max(v => v.Y);
+
+                for (int iFlipped = 0; iFlipped < 2; iFlipped++)
+                {
+                    Console.WriteLine(bigTile);
+                    Console.WriteLine();
+
+                    for (int iDirection = 0; iDirection < 4; iDirection++)
+                    {
+                        for (int y = 0; y < bigTile.Content.Length - seaMonsterHeight; y++)
+                        for (int x = 0; x < bigTile.Content[0].Length - seaMonsterWidth; x++)
+                        {
+                            foreach (var monsterTestPos in seaMonsterPositions)
+                            {
+                                if (bigTile.Content[y + (int) monsterTestPos.Y][x + (int) monsterTestPos.X] != '#')
+                                {
+                                    goto tryNextPosition;
+                                }
+                            }
+
+                            foreach (var monsterTestPos in seaMonsterPositions)
+                            {
+                                seaMonsterParts.Add(new V2(x + monsterTestPos.X, y + monsterTestPos.Y));
+                            }
+
+                            tryNextPosition: ;
+                        }
+
+
+                        bigTile.RotateCW();
+                    }
+                    
+                    bigTile.FlipV();
+                }
+
+                var totalHash = bigTile.Content.Sum(row => row.Count(c => c == '#'));
+                var result = totalHash - seaMonsterParts.Count;
+                
+                Clipboard.Set(result);
             }
             else
             {
