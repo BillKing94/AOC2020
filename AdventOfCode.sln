@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day20 - Monster Map", "Day2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day23 - Cup Game", "Day23 - Cup Game\Day23 - Cup Game.csproj", "{DA38EF2F-B805-4F9E-AC66-F3FF8EF6735E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day25 - Exponentiation", "Day25 - Exponentiation\Day25 - Exponentiation.csproj", "{7497D1F2-AA72-40C3-8B70-4A8B1D494464}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,5 +140,9 @@ Global
 		{DA38EF2F-B805-4F9E-AC66-F3FF8EF6735E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA38EF2F-B805-4F9E-AC66-F3FF8EF6735E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA38EF2F-B805-4F9E-AC66-F3FF8EF6735E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7497D1F2-AA72-40C3-8B70-4A8B1D494464}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7497D1F2-AA72-40C3-8B70-4A8B1D494464}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7497D1F2-AA72-40C3-8B70-4A8B1D494464}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7497D1F2-AA72-40C3-8B70-4A8B1D494464}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
