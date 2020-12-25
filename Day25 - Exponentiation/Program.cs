@@ -216,9 +216,6 @@ namespace Day25
             var pubKey1 = lines[0];
             var pubKey2 = lines[1];
             
-            // var encrKey = (pubKey1 * (pubKey2 / 7)) % 20201227;
-            // Clipboard.Set(encrKey);
-
             long? loop1 = null;
             long? loop2 = null;
 
