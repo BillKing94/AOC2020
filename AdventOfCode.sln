@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day23 - Cup Game", "Day23 -
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day25 - Exponentiation", "Day25 - Exponentiation\Day25 - Exponentiation.csproj", "{7497D1F2-AA72-40C3-8B70-4A8B1D494464}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day22 - Card Game", "Day22 - Card Game\Day22 - Card Game.csproj", "{EE339A33-F2BD-446B-9E80-5FA09411CEA3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -144,5 +146,9 @@ Global
 		{7497D1F2-AA72-40C3-8B70-4A8B1D494464}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7497D1F2-AA72-40C3-8B70-4A8B1D494464}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7497D1F2-AA72-40C3-8B70-4A8B1D494464}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE339A33-F2BD-446B-9E80-5FA09411CEA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE339A33-F2BD-446B-9E80-5FA09411CEA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE339A33-F2BD-446B-9E80-5FA09411CEA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE339A33-F2BD-446B-9E80-5FA09411CEA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
